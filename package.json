@@ -7,12 +7,12 @@
     "lib": "lib"
   },
   "dependencies": {
+    "inquirer": "^8.1.2",
     "jest": "^27.0.6"
   },
   "devDependencies": {},
   "scripts": {
-    "test": "jest",
-    "start": "node index.js"
+    "test": "jest"
   },
   "repository": {
     "type": "git",
