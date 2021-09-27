@@ -1,3 +1,4 @@
+const { ADDRGETNETWORKPARAMS } = require('dns');
 const fs = require('fs');
 const inquirer = require('inquirer');
 
@@ -73,6 +74,7 @@ function employee() {
             .then(response => {
                 const newManager = new Manager(answers.name, answers.email, answers.id, answers.role, response.officeNumber)
                 newTeam.push(newManager);
+                addNew();
             })
         } else if (answers.role === 'Engineer') {
             inquirer.prompt([
@@ -92,9 +94,29 @@ function employee() {
             .then(response => {
                 const newEngineer = new Engineer(answers.name, answers.email, answers.id, answers.role, response.gitHub)
                 newTeam.push(newEngineer);
+                addNew();
             })
-        } else if (answers.role === 'Intern') {
-            
+        } else if (answers.role === 'Employee') {
+            const newEmployee = new Employee(answers.name, answers.email, answers.id, answers.role)
+            newTeam.push(newEmployee);
+            addNew();
+        }
+
+        function addNew() {
+            inquirer.prompt([
+                {
+                    type: 'confirm',
+                    name: 'addNew',
+                    message: 'Would you like to add another Employee?'
+                }
+            ])
+            .then(response => {
+                if (response.addNew === true) {
+                    employee(newEmployee);
+                } else {
+                    // formHtml
+                }
+            })
         }
     })
 }
