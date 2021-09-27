@@ -13,26 +13,15 @@ test('Create name for manager', () => {
     expect(manager.name).toBe(name);
 });
 
-test('create id for manager', () => {
-    const id = "1234";
-    const manager = new Manager(id);
-    expect(manager.id).toBe(id);
-});
-
-test('create email for manager', () => {
-    const email = "test@test.com";
-    const manager = new Manager(email);
-    expect(manager.email).toBe(email);
-});
 
 test('create role for manager', () => {
     const role = "manager";
-    const manager = new Manager(role);
+    const manager = new Manager('John', '1234', 'test@test.com', role);
     expect(manager.role).toBe(role);
 });
 
 test('create office number for manager', () => {
     const officeNumber = "307";
-    const manager = new Manager(officeNumber);
+    const manager = new Manager('John', '1234', 'test@test.com', officeNumber);
     expect(manager.officeNumber).toBe(officeNumber);
 });

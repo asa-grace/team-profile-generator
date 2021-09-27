@@ -2,6 +2,10 @@ const fs = require('fs');
 const inquirer = require('inquirer');
 
 const Employee = require('./lib/Employee');
+const Engineer = require('./lib/Engineer');
+const Manager = require('./lib/Manager');
+
+const newTeam = [];
 
 function employee() {
     inquirer.prompt([
@@ -50,6 +54,49 @@ function employee() {
             choices: ['Manager', 'Engineer', 'Employee']
         }
     ])
+    .then(answers => {
+        if (answers.role === 'Manager') {
+            inquirer.prompt([
+                {
+                    type: 'input',
+                    name: 'officeNumber',
+                    message: 'Enter the Managers office number',
+                    validate: numberInput => {
+                        if (numberInput) {
+                            return true;
+                        } else {
+                            console.log('Office Number is Required!');
+                        }
+                    }
+                }
+            ])
+            .then(response => {
+                const newManager = new Manager(answers.name, answers.email, answers.id, answers.role, response.officeNumber)
+                newTeam.push(newManager);
+            })
+        } else if (answers.role === 'Engineer') {
+            inquirer.prompt([
+                {
+                    type: 'input',
+                    name: 'gitHub',
+                    message: 'Enter the Engineers Github',
+                    validate: gitHubInput => {
+                        if (gitHubInput) {
+                            return true;
+                        } else {
+                            console.log('Github information Required');
+                        }
+                    }
+                }
+            ])
+            .then(response => {
+                const newEngineer = new Engineer(answers.name, answers.email, answers.id, answers.role, response.gitHub)
+                newTeam.push(newEngineer);
+            })
+        } else if (answers.role === 'Intern') {
+            
+        }
+    })
 }
 
 employee();
