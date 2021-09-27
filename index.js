@@ -1,6 +1,7 @@
 const { ADDRGETNETWORKPARAMS } = require('dns');
 const fs = require('fs');
 const inquirer = require('inquirer');
+const internal = require('stream');
 
 const Employee = require('./lib/Employee');
 const Engineer = require('./lib/Engineer');
@@ -72,7 +73,7 @@ function employee() {
                 }
             ])
             .then(response => {
-                const newManager = new Manager(answers.name, answers.email, answers.id, answers.role, response.officeNumber)
+                const newManager = new Manager(answers.name, answers.email, answers.id, answers.role, response.numberInput)
                 newTeam.push(newManager);
                 addNew();
             })
@@ -92,7 +93,7 @@ function employee() {
                 }
             ])
             .then(response => {
-                const newEngineer = new Engineer(answers.name, answers.email, answers.id, answers.role, response.gitHub)
+                const newEngineer = new Engineer(answers.name, answers.email, answers.id, answers.role, response.gitHubInput)
                 newTeam.push(newEngineer);
                 addNew();
             })
@@ -100,6 +101,27 @@ function employee() {
             const newEmployee = new Employee(answers.name, answers.email, answers.id, answers.role)
             newTeam.push(newEmployee);
             addNew();
+        } else if (answers.role === 'Intern') {
+            inquirer.prompt([
+                {
+                    type: 'input',
+                    name: 'school',
+                    message: 'Please enter your interns school name',
+                    validate: schoolInput => {
+                        if (schoolInput) {
+                            return true;
+                        } else {
+                            console.log('School name required!');
+                            return false;
+                        }
+                    }
+                }
+            ])
+            .then(response => {
+                const newIntern = new Intern(answers.name, answers.email, answers.id, answers.role, response.schoolInput)
+                newTeam.push(newIntern);
+                addNew();
+            })
         }
 
         function addNew() {
