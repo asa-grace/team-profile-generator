@@ -1,7 +1,6 @@
-const { ADDRGETNETWORKPARAMS } = require('dns');
 const fs = require('fs');
 const inquirer = require('inquirer');
-const internal = require('stream');
+
 
 const Employee = require('./lib/Employee');
 const Engineer = require('./lib/Engineer');
